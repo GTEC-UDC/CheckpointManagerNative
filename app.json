@@ -5,7 +5,13 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "udc.gtec"
+    },
+    "ios": {
+      "bundleIdentifier": "udc.gtec"
+    }
   },
   "name": "CheckpointManagerNative"
 }
