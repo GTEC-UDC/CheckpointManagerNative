@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { Text, View, StyleSheet, DeviceEventEmitter} from 'react-native';
+import { Text, View, StyleSheet} from 'react-native';
 import {getClient} from '../feather';
 import { useForm, Controller } from "react-hook-form";
 import {TextInput, Button} from 'react-native-paper';
@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { withTheme } from 'react-native-paper';
-import Beacons from 'react-native-beacons-manager';
+
 
 const styles = StyleSheet.create({
   avatar: {
@@ -74,26 +74,6 @@ export function LoginPage({navigation}) {
   const [bleUUID, setBleUUID] = uuid;
 
   const [httpClient, setHttpClient] = useHttpClient();
-
-  const region = {
-    identifier: 'Estimotes',
-    uuid: 'B9407F30-F5F8-466E-AFF9-25556B57FE6D'
-  };
-
-  
-
-  useEffect(() => {
-    Beacons.detectIBeacons();
-      Beacons.startRangingBeaconsInRegion(region).then(()=>{
-        console.log('Beacons ranging started succesfully!');
-      }).catch((err)=>{
-        console.log('Beacons ranging not started, error: ${err');
-      });
-      DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-        console.log('Found beacons!', data.beacons)
-      });
-
-}, []);
 
 
   useEffect(() => {

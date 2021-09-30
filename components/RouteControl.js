@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import client from '../feather';
 import {Button} from 'react-native-paper';
-import { Text, View } from 'react-native';
+import {View, DeviceEventEmitter} from 'react-native';
 
-
-
+import Beacons from 'react-native-beacons-manager';
   
 export default function RouteControl({navigation, routeStarted, setRouteStarted, currentRoute, 
   currentCheckpoints, currentCheckpoint, setCurrentCheckpoint,
   currentPath, setCurrentPath, indexCheckpoint, setIndexCheckpoint,
-  currentIndex, setCurrentIndex,showConfirmStop, setShowConfirmStop, reachedEndRoute, setReachedEndRoute, httpClient}) {
+  currentIndex, setCurrentIndex,showConfirmStop, setShowConfirmStop, reachedEndRoute, setReachedEndRoute, httpClient, bleUUID}) {
+
+    const region = {
+      identifier: 'Beacons',
+      uuid: bleUUID
+    };
 
     let tagButtonStart, colorButtonStart, nameButtonStart, heightButtonStart, fontSizeButtonStart, marginTopButtonStart;
 
@@ -29,6 +33,25 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
         marginTopButtonStart = 40;
     }
 
+    useEffect(() => {
+
+      Beacons.detectIBeacons();
+      DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+        if (data.beacons.length>0){
+          console.log('Found beacons!', data.beacons)
+          httpClient.service('beaconreports').create({scans:data.beacons}).then(() => {
+            console.log("Beacon Report saved");
+          }).catch((err) => {
+              console.log(err);
+          });
+        }
+      });
+  
+  }, []);
+  
+
+
+
 
     const handleClick = (name) => {
       console.log("Button clicked");
@@ -36,7 +59,11 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
             case "start":
                 setReachedEndRoute(false);
                 setRouteStarted(true);
-
+                Beacons.startRangingBeaconsInRegion(region).then(()=>{
+                  console.log('Beacons ranging started succesfully!');
+                }).catch((err)=>{
+                  console.log('Beacons ranging not started, error: ${err}');
+                });
                 break;
             case "stop":
                 setShowConfirmStop(true);
@@ -45,6 +72,11 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
                  setShowConfirmStop(false);
                 break;
             case "confirm_stop":
+                Beacons.stopRangingBeaconsInRegion(region).then(()=>{
+                  console.log('Beacons ranging stopped succesfully!');
+                }).catch((err)=>{
+                  console.log('Beacons ranging not stopped, error: ${err}');
+                });
                 setReachedEndRoute(false);
                 setRouteStarted(false);
                 setShowConfirmStop(false);

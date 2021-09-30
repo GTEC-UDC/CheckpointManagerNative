@@ -124,6 +124,7 @@ export default function RoutePage({navigation}) {
                   reachedEndRoute={reachedEndRoute}
                   setReachedEndRoute={setReachedEndRoute}
                   httpClient={httpClient}
+                  bleUUID={bleUUID}
                   />
 
                 <View>
@@ -187,6 +188,7 @@ export default function RoutePage({navigation}) {
                   reachedEndRoute={reachedEndRoute}
                   setReachedEndRoute={setReachedEndRoute}
                   httpClient={httpClient}
+                  bleUUID={bleUUID}
                   />
               </View>
           }

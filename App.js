@@ -55,7 +55,7 @@ function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <SettingsProvider value={{endpoint:"http://10.0.2.2:3031",uuid:"D7F8B7E3-559A-4AF8-8715-3A56C4030F64"}}>
+    <SettingsProvider value={{endpoint:"http://checkpointapp.gtec.udc.es:3031",uuid:"D7F8B7E3-559A-4AF8-8715-3A56C4030F64"}}>
       <HttpClientProvider>
     <IsLoggedProvider>
       <NavigationContainer>
