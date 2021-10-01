@@ -35,15 +35,9 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
 
     useEffect(() => {
 
-      if (Platform.OS=="ios"){
-        Beacons.requestWhenInUseAuthorization();
-        //Beacons.startMonitoringForRegion(region);
-        
-        //Beacons.startUpdatingLocation();
-      } else if (Platform.OS=="android") {
+      if (Platform.OS=="android") {
         Beacons.detectIBeacons();
-      }
-
+      console.log("Setting beacon ranging listener");
       DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
         if (data.beacons.length>0){
           console.log('Found beacons!', data.beacons)
@@ -54,6 +48,18 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
           });
         }
       });
+    } else {
+      Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
+        if (data.beacons.length>0){
+          console.log('Found beacons!', data.beacons)
+          httpClient.service('beaconreports').create({scans:data.beacons}).then(() => {
+            console.log("Beacon Report saved");
+          }).catch((err) => {
+              console.log(err);
+          });
+        }
+      });
+    }
 
   }, []);
 

@@ -5541,10 +5541,9 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.6.0, react-is@^16.7.0, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react-native-beacons-manager@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/react-native-beacons-manager/-/react-native-beacons-manager-1.0.7.tgz#b25a70e80f2b025013f3e2156e3ba59055078364"
-  integrity sha512-pTaVaM7lwQ2yiWAfU3lgsYvd+Y65YAKhID/axSmNqoPKAu2RdgLTUJUhYNYPOArWJCa6IdQ6OuMx5IqWl/gEIQ==
+"react-native-beacons-manager@git://github.com/MacKentoch/react-native-beacons-manager.git#53c1bda":
+  version "1.1.0"
+  resolved "git://github.com/MacKentoch/react-native-beacons-manager.git#53c1bda81f032e775f29327a7bab28a14528cf39"
 
 react-native-gesture-handler@~1.10.2:
   version "1.10.3"

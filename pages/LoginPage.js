@@ -12,7 +12,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { withTheme } from 'react-native-paper';
-
+import Beacons from 'react-native-beacons-manager';
+  
 
 const styles = StyleSheet.create({
   avatar: {
@@ -79,6 +80,16 @@ export function LoginPage({navigation}) {
   useEffect(() => {
     setHttpClient(getClient(endpointUrl));
 }, [endpointUrl]);
+
+    useEffect(() => {
+      if (Platform.OS=="ios"){
+        Beacons.requestWhenInUseAuthorization();
+        //Beacons.startMonitoringForRegion(region);
+        
+        //Beacons.startUpdatingLocation();
+      } 
+  }, []);
+
 
 
   const clickLogin = () => {

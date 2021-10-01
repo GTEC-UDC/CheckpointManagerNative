@@ -5,7 +5,7 @@ import CheckpointInfo from '../components/CheckpointInfo';
 import RouteControl from "../components/RouteControl";
 import RouteCheckpointControl from "../components/RouteCheckpointControl";
 import {getClient} from '../feather';
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {useIsLogged} from '../context/IsLoggedState';
 import {useSettings} from '../context/SettingsState';
 import {useHttpClient} from '../context/HTTPClientState';
@@ -102,7 +102,7 @@ export default function RoutePage({navigation}) {
 
     return (
 
-      <View style={styles.mainContainer}>
+      <ScrollView style={styles.mainContainer}>
 
           { routeStarted || reachedEndRoute? 
         <View>
@@ -193,7 +193,7 @@ export default function RoutePage({navigation}) {
               </View>
           }
         
-        </View>
+        </ScrollView>
 
     );
 }

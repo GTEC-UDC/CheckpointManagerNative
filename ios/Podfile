@@ -19,5 +19,5 @@ target 'CheckpointManagerNative' do
   #   end
   # end
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
+  pod 'ReactNativeBeaconsManager', :path => '../node_modules/react-native-beacons-manager'
 end

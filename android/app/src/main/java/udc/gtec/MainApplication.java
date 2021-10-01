@@ -7,6 +7,8 @@ import android.net.Uri;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.mackentoch.beaconsandroid.BeaconsAndroidPackage;
+import com.mackentoch.beaconsandroid.BeaconsAndroidPackage;
+import com.mackentoch.beaconsandroid.BeaconsAndroidPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
