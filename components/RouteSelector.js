@@ -5,10 +5,11 @@ import { Text, View } from 'react-native';
 
 
 
-export default function RouteSelector({routes, currentRoute, setCurrentRoute, setCurrentCheckpoints, setCurrentCheckpoint}) {
+export default function RouteSelector({routes, currentRoute, setCurrentRoute, setCurrentCheckpoints, setCurrentCheckpoint }) {
     const handleChange = (itemValue, itemIndex) => {
-                let route = itemValue;
+                let route = routes[itemIndex];
                 setCurrentRoute(route);
+                console.log("Router["+itemIndex+"]= " + JSON.stringify(route));
                 setCurrentCheckpoints(route.points);
                 setCurrentCheckpoint({point:route.points[0], index:0});
       };
@@ -19,9 +20,9 @@ export default function RouteSelector({routes, currentRoute, setCurrentRoute, se
             <Picker
             labelId="label-ruta"
             id="select-ruta"
-            value={currentRoute}
+            selectedValue={currentRoute}
             name ="route"
-            onChange={handleChange}
+            onValueChange={handleChange}
             >
             {routes.map((ob, i) => (<Picker.Item label={ob.tag} value={ob} key={ob.tag}/>))}
             </Picker>

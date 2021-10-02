@@ -57,12 +57,12 @@ export default function RoutePage({navigation}) {
       container: {
         flex: 3,
         justifyContent: 'center',
-        padding: 8,
+        padding: 0,
       },
       mainContainer: {
         flex: 1,
         flexDirection: "column",
-        padding: 40
+        margin:40
       },
       input: {
         backgroundColor: 'white',
@@ -102,10 +102,10 @@ export default function RoutePage({navigation}) {
 
     return (
 
-      <ScrollView style={styles.mainContainer}>
+      <ScrollView>
 
           { routeStarted || reachedEndRoute? 
-        <View>
+        <View style={styles.mainContainer}>
                 <RouteControl
                   routeStarted={routeStarted}
                   setRouteStarted={setRouteStarted}
@@ -156,20 +156,13 @@ export default function RoutePage({navigation}) {
                 }
                 </View>
               :
-              <View>
+              <View style={styles.mainContainer}>
               <RouteSelector 
                   routes={routes} 
                   currentRoute={currentRoute} 
                   setCurrentRoute={setCurrentRoute}
                   setCurrentCheckpoints={setCurrentCheckpoints}
                   setCurrentCheckpoint={setCurrentCheckpoint} />
-              <CheckpointSelector 
-                  currentCheckpoints={currentCheckpoints}
-                  setCurrentCheckpoint={setCurrentCheckpoint} 
-                  currentIndex={currentIndex}
-                  setCurrentIndex={setCurrentIndex}/>
-              <CheckpointInfo 
-                  currentCheckpoint={currentCheckpoint}/>
               <RouteControl
                   routeStarted={routeStarted}
                   setRouteStarted={setRouteStarted}
