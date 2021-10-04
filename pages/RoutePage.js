@@ -107,6 +107,7 @@ export default function RoutePage({navigation}) {
           { routeStarted || reachedEndRoute? 
         <View style={styles.mainContainer}>
                 <RouteControl
+                  navigation ={navigation}
                   routeStarted={routeStarted}
                   setRouteStarted={setRouteStarted}
                   currentRoute={currentRoute}
@@ -164,6 +165,7 @@ export default function RoutePage({navigation}) {
                   setCurrentCheckpoints={setCurrentCheckpoints}
                   setCurrentCheckpoint={setCurrentCheckpoint} />
               <RouteControl
+                  navigation ={navigation}
                   routeStarted={routeStarted}
                   setRouteStarted={setRouteStarted}
                   currentRoute={currentRoute}

@@ -83,10 +83,18 @@ export function LoginPage({navigation}) {
 
     useEffect(() => {
       if (Platform.OS=="ios"){
-        Beacons.requestWhenInUseAuthorization();
+        
         //Beacons.startMonitoringForRegion(region);
         
         //Beacons.startUpdatingLocation();
+
+       Beacons.BeaconsEventEmitter.addListener(
+          'authorizationStatusDidChange',
+          (info) => console.log('authorizationStatusDidChange: ', info)
+       );
+
+       Beacons.requestWhenInUseAuthorization();
+
       } 
   }, []);
 

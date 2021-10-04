@@ -37,7 +37,7 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
 
       if (Platform.OS=="android") {
         Beacons.detectIBeacons();
-      console.log("Setting beacon ranging listener");
+      console.log("Setting Andoird beacon ranging listener");
       DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
         if (data.beacons.length>0){
           console.log('Found beacons!', data.beacons)
@@ -49,6 +49,7 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
         }
       });
     } else {
+      console.log("Setting IOS beacon ranging listener");
       Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
         if (data.beacons.length>0){
           console.log('Found beacons!', data.beacons)
@@ -62,6 +63,25 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
     }
 
   }, []);
+
+
+  navigation.addListener('beforeRemove', (e) => {
+      if (reachedEndRoute==false && routeStarted==true){
+
+        Beacons.stopRangingBeaconsInRegion(region).then(()=>{
+          console.log('Beacons ranging stopped succesfully!');
+        }).catch((err)=>{
+          console.log('Beacons ranging not stopped, error: ${err}');
+        });
+
+        if (Platform.OS=="android") {
+          DeviceEventEmitter.removeAllListeners('beaconsDidRange');
+        } else {
+          Beacons.BeaconsEventEmitter.removeAllListeners('beaconsDidRange');
+        }
+
+      }
+  });
 
 
     const handleClick = (name) => {
@@ -89,6 +109,12 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
                   }).catch((err)=>{
                     console.log('Beacons ranging not stopped, error: ${err}');
                   });
+
+                  if (Platform.OS=="android") {
+                    DeviceEventEmitter.removeAllListeners('beaconsDidRange');
+                  } else {
+                    Beacons.BeaconsEventEmitter.removeAllListeners('beaconsDidRange');
+                  }
 
                 setReachedEndRoute(false);
                 setRouteStarted(false);
