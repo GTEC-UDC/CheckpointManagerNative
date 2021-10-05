@@ -22,7 +22,7 @@ export default function RouteCheckpointControl({routeStarted, setRouteStarted, c
 
     const handleClick = () => {
                let newPath = currentPath;
-               let ts = Math.floor(Date.now() / 1000)
+               let ts = Date.now();
                let indexCheckpoint = currentCheckpoint.index;
               newPath.routeTag = currentRoute.tag;
               newPath.routeId = currentRoute._id;
