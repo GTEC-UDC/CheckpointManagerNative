@@ -8,6 +8,7 @@ import {useIsLogged} from '../context/IsLoggedState';
 import {useSettings} from '../context/SettingsState';
 import {useHttpClient} from '../context/HTTPClientState';
 import BeaconsInfo from '../components/BeaconsInfo';
+import TimeSyncControl from '../components/TimeSyncControl';
 
 
 
@@ -193,6 +194,7 @@ export default function RoutePage({navigation}) {
                   bleUUID={bleUUID}
                   setLastBeacons={setLastBeacons}
                   />
+                  <TimeSyncControl navigation ={navigation} httpClient={httpClient}/>
               </View>
           }
         
