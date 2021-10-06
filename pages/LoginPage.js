@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet, PermissionsAndroid} from 'react-native';
 import {getClient} from '../feather';
 import { useForm, Controller } from "react-hook-form";
 import {TextInput, Button} from 'react-native-paper';
@@ -94,8 +94,26 @@ export function LoginPage({navigation}) {
        );
 
        Beacons.requestWhenInUseAuthorization();
-
-      } 
+      } else {
+        //ANDROID
+        try {
+          const granted = PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+              {
+                  'title': 'Location Permission',
+                  'message': 'We need to access location to scan the beacons.'
+              }
+          )
+          console.log('here', granted);
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              console.log("Location Permitted")
+          } else {
+              console.log("Location permission denied")
+          }
+      } catch (err) {
+          console.warn(err)
+      }
+      }
   }, []);
 
 

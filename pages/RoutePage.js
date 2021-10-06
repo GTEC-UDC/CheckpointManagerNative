@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import RouteSelector from '../components/RouteSelector';
-import CheckpointSelector from '../components/CheckpointSelector';
 import CheckpointInfo from '../components/CheckpointInfo';
 import RouteControl from "../components/RouteControl";
 import RouteCheckpointControl from "../components/RouteCheckpointControl";
-import {getClient} from '../feather';
-import { Text, View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useIsLogged} from '../context/IsLoggedState';
 import {useSettings} from '../context/SettingsState';
 import {useHttpClient} from '../context/HTTPClientState';
+import BeaconsInfo from '../components/BeaconsInfo';
+
 
 
 
@@ -35,6 +35,7 @@ export default function RoutePage({navigation}) {
     const [bleUUID, setBleUUID] = uuid
 
     const [httpClient, setHttpClient] = useHttpClient();
+    const [lastBeacons, setLastBeacons] = useState([]);
 
     const styles = StyleSheet.create({
       avatar: {
@@ -126,6 +127,7 @@ export default function RoutePage({navigation}) {
                   setReachedEndRoute={setReachedEndRoute}
                   httpClient={httpClient}
                   bleUUID={bleUUID}
+                  setLastBeacons={setLastBeacons}
                   />
 
                 <View>
@@ -155,7 +157,12 @@ export default function RoutePage({navigation}) {
                     />
 
                 }
+
+                <View>
+                  <BeaconsInfo lastBeacons={lastBeacons}></BeaconsInfo>
                 </View>
+                </View>
+                
               :
               <View style={styles.mainContainer}>
               <RouteSelector 
@@ -184,6 +191,7 @@ export default function RoutePage({navigation}) {
                   setReachedEndRoute={setReachedEndRoute}
                   httpClient={httpClient}
                   bleUUID={bleUUID}
+                  setLastBeacons={setLastBeacons}
                   />
               </View>
           }

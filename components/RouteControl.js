@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import client from '../feather';
+import React, { useState, useEffect} from "react";
 import {Button} from 'react-native-paper';
 import {View, DeviceEventEmitter, Platform} from 'react-native';
 
@@ -8,7 +7,8 @@ import Beacons from 'react-native-beacons-manager';
 export default function RouteControl({navigation, routeStarted, setRouteStarted, currentRoute, 
   currentCheckpoints, currentCheckpoint, setCurrentCheckpoint,
   currentPath, setCurrentPath, indexCheckpoint, setIndexCheckpoint,
-  currentIndex, setCurrentIndex,showConfirmStop, setShowConfirmStop, reachedEndRoute, setReachedEndRoute, httpClient, bleUUID}) {
+  currentIndex, setCurrentIndex,showConfirmStop, setShowConfirmStop, reachedEndRoute, setReachedEndRoute, httpClient, bleUUID, setLastBeacons}) {
+
 
     const region = {
       identifier: 'Beacons',
@@ -34,11 +34,16 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
     }
 
     useEffect(() => {
-
+      if (!routeStarted){
       if (Platform.OS=="android") {
         Beacons.detectIBeacons();
       console.log("Setting Andoird beacon ranging listener");
       DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
+        console.log('Found beacons!', data.beacons);
+        setLastBeacons(data.beacons.map((aBeacon)=>{
+          aBeacon.battery =(aBeacon.minor & 0XFF00) >> 8;
+          return aBeacon;
+        }));
         if (data.beacons.length>0){
           console.log('Found beacons!', data.beacons)
           httpClient.service('beaconreports').create({scans:data.beacons}).then(() => {
@@ -51,6 +56,10 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
     } else {
       console.log("Setting IOS beacon ranging listener");
       Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
+        setLastBeacons(data.beacons.map((aBeacon)=>{
+          aBeacon.battery =(aBeacon.minor & 0XFF00) >> 8;
+          return aBeacon;
+        }));
         if (data.beacons.length>0){
           console.log('Found beacons!', data.beacons)
           httpClient.service('beaconreports').create({scans:data.beacons}).then(() => {
@@ -61,6 +70,7 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
         }
       });
     }
+  }
 
   }, []);
 
@@ -91,7 +101,7 @@ export default function RouteControl({navigation, routeStarted, setRouteStarted,
                 setReachedEndRoute(false);
                 setRouteStarted(true);
                   Beacons.startRangingBeaconsInRegion(region).then(()=>{
-                    console.log('Beacons ranging started succesfully!');
+                    console.log('Beacons ranging started succesfully! in region ' + JSON.stringify(region));
                   }).catch((err)=>{
                     console.log('Beacons ranging not started, error: ${err}');
                   });
